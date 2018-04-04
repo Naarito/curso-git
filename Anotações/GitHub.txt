@@ -1,0 +1,221 @@
+=================================================
+    Curso GitHub Alura - Aula 01 - Introdução
+=================================================
+
+Abrindo o bash onde se deseja realizar uma ação:
+    Clicar com o mouse direito dentro da pasta destino da ação e então selecionar "GIT Bash"
+
+Clonar um projeto do github:
+    URL original -> https://cursos.alura.com.br/course/git/task/23105
+    Comando GIT Bash -> git clone https://github.com/jcfonsecagit/repositorio.git
+
+    Observação: 
+    Em computadores com certificados corporativos, é necessário
+    remover o arquivo ".gitconfig"do usuário atual
+
+
+Descobrir as versões do projeto:
+    git tag
+
+Trocar para uma outra versão (branch) do projeto
+    git checkout [versão]
+
+Comparar a versão ativa com outra versão
+    git diff [outra versão]
+
+
+===================================================
+    Curso GitHub Alura - Aula 02 - Ciclo Básico
+===================================================
+
+Transformando uma pasta em um repositório Git:
+    git init
+
+Listar arquivos controlados pelo git:
+    git ls-files
+
+Estado atual do repositório
+    git status
+
+Adicionar um arquivo ao monitoramento:
+    git add [nome do arquivo]
+    git add [caminho de um diretório]
+    git add .      //PUXA O DIRETÓRIO ATUAL, OU SEJA, TODOS SEUS ARQUIVOS
+
+    git add -i     //TORNA INTERATIVA A SELEÇÃO DE QUAIS ARQUIVOS MANTER
+
+    git commit -a  //ADICIONA TODOS OS ARQUIVOS, NÃO NOVOS,  ALTERADOS
+
+
+
+    Observação:
+    É necessário adicionar o arquivo tanto inicialmente,
+    quanto em gravações (commits) posteriores
+
+Gravar alterações realizadas no repositório:
+    git commit -m "[Mensagem descrevendo a alteração]"
+
+Alterar usuário e e-mail do criador do projeto:
+    git config --global --edit
+
+    Observação: 
+    pressionar "i" para inserir dados, 
+    "ESC" para retornar ao menu de comandos,
+    ":w" para salvar e ":q" para sair
+
+Gravar alteração no autor
+    git commit --amend --reset-author
+
+Estados do repositório:
+    Working Directory -> Estado atual dos arquivos no repositório local
+    Index -> Local onde os arquivos alterados são comparados com o HEAD ao utilizar o git add
+    Head -> Referência de comparação do trabalho atual com o anterior
+
+====================================================
+    Curso GitHub Alura - Aula 03 - Sincronização
+====================================================
+
+Puxar histórico de commits:
+    git log
+    git whatchanged     //MOSTRA COMMITS E QUAIS ARQUIVOS FORAM COMITADOS
+    git whatchanged -p  //MOSTRA OS COMMITS, ARQUIVOS E ALTERAÇÕES COMITADAS, TRANSCORRER COM ENTER, SAIR COM Q
+
+Verificar a quais repositórios remotos estão atrelados ao local:
+    git remote
+
+Adicionando o repositório remoto:
+    git remote add origin [URL do repositório remoto]
+
+Subindo arquivos para o repositório online:
+    git push -u origin master
+
+Baixando um repositório remoto:
+    git clone [URL do repositório]
+
+====================================================
+    Curso GitHub Alura - Aula 04 - Branches
+====================================================
+
+Listar Branches do projeto:
+    git branch
+
+Criar uma nova branch:
+    git branch [nome da branch]
+
+Alterar a branch atual:
+    git checkout [nome da branch]
+    git checkout -b [nome da branch] (cria e já troca para a nova branch)
+
+Adicionar arquivos novos e commitar seguem os mesmos comandos vistos anteriormente.
+ 
+Criar branch remota atralada à branch local:
+    git push origin -u [nome da branch]
+
+Visualizar branches remotas:
+    git branch -r
+
+Visualizar branches remotas e locais:
+    git branch -a
+
+Apagar branches localmente:
+    git branch [nome da branch] -d
+
+Apagar branches remotas:
+    git push -d origin [nome da branch]
+
+Procurar novas branches remotas:
+    git fetch origin
+
+Atualizar branches locais com branches remotas:
+    git pull
+
+Criar uma branch local correspondente a uma nova branch remota:
+    git branch -t [nome da branch] origin/[nome da branch]
+
+Criar um arquivo, entrar nele e puxar uma branch remota
+    git checkout -t origin/[nome da branch]
+
+====================================================
+    Curso GitHub Alura - Aula 05 - Conflitos
+====================================================
+
+Ao finalizarmos uma alteração no código, podemos realizar o "git pull" para verificar se há alterações
+por conta de outros usuários no repositório remoto.
+
+Caso não haja conflito, um auto-merge ocorrerá, caso haja, será necessário abrir o arquivo em questão
+e realizar o merge manualmente, apagando itens não necessários;
+
+Após finalizado o merge manual, é necessário usar o "git add" novamente, para que o git entenda que o
+arquivo foi unificado.
+
+Após isto, usamos "git commit -m "merge de X"" para comprometer a versão nova
+
+finalizado o commit, podemos realizar o "git push".
+
+Ferramentas úteis para merges de conflitos:
+    git mergetool --tool-help
+
+Usando uma das ferramentas disponíveis:
+    git mergetool -t nome_do_programa
+
+
+====================================================
+    Curso GitHub Alura - Aula 06 - Boas Práticas
+====================================================
+
+Retornando de uma branch dev para master:
+    git checkout master
+    git pull
+
+Após isto temos um master defasado em relação à dev e, para que a dev esteja na mesma base que o master:
+    git checkout develop
+    git rebase master
+
+Voltamos à master, atualizamos a com a nova branch e então subimo-na ao servidor:
+    git checkout master
+    git merge develop
+    git push
+
+====================================================
+    Curso GitHub Alura - Aula 07 - Controle de alterações
+====================================================
+
+Retornar um arquivo alterado, e não adicionado ou commitado, ao último commit:
+    git checkout [nome do arquivo]
+
+Retornar um arquivo alterado, e adicionado e não commitado, ao último commit:
+    git reset HEAD [nome do arquivo]
+    git checkout -- [nome do arquivo]
+
+Retornar um arquivo alterado, e commitado, ao último commit:
+    git reset [código do commit]
+
+    Os arquivos se mantém alterados, podemos então realterá-lo e realizar novo commit,
+    ou fazer o processo do git checkout acima.
+
+Desfazer um único commit no meio do arquivo:
+    git revert [código do commit]
+
+Armazenando alterações não adicionadas ou commitadas:
+    git stash
+
+Visualizar se há stash:
+    git stash list
+
+Retormar stash:
+    git stash apply stash@{número do stash}
+
+Apagar um stash já utilizado ou indesejado:
+    git stash drop
+
+Procurar um commit específico entre vários:
+    git bisect start
+    git bisect bad HEAD (diz que o commit atual está ruim)
+    git bisect good [código do commit] (diz que tal commit está ruim)
+
+    Obs.: no modo bisect o próprio git transcorre os diferentes commits
+
+
+
+
+
